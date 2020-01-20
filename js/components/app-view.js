@@ -1,30 +1,39 @@
 import { AreaGenerator } from "../generators/area-generator.js";
 import { Inputter } from "../engine/inputter.js";
 import { Renderer } from "../engine/renderer.js";
+import { Loader } from "../engine/loader.js";
+import { Updater } from "../engine/updater.js";
 import { Engine } from "../engine/engine.js";
 
 customElements.define("app-view",
 	class extends HTMLElement{
 
 	constructor() {
-		bind(this);
+		super();
+		this.bind(this);
 	}
 
 	bind(appView) {
 		appView.cacheDom = appView.cacheDom.bind(appView);
-		appView.init = appView.init.bind(appView);
 		appView.attachEvents = appView.attachEvents.bind(appView);
 		appView.onResize = appView.onResize.bind(appView);
 	}
 
 	prerender(){
 		this.attachShadow({ mode: "open" });
-		this.shadowRoot.innerHTML = `<canvas id="main"></canvas>`;
+		this.shadowRoot.innerHTML = `
+			<style>
+				:host { display: block; }
+				canvas { display: block; }
+				#main { image-rendering: pixelated; }
+			</style>
+			<canvas id="main"></canvas>
+		`;
 	}
 
 	cacheDom() {
 		this.dom = {
-			canvas: document.getElementById("main")
+			canvas: this.shadowRoot.getElementById("main")
 		};
 	}
 

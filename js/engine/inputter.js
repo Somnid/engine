@@ -1,3 +1,5 @@
+import { Keyboard } from "../lib/keyboard.js";
+
 function bind(inputter) {
 	inputter.init = inputter.init.bind(inputter);
 	inputter.getInputState = inputter.getInputState.bind(inputter);
@@ -6,8 +8,7 @@ function bind(inputter) {
 }
 
 export class Inputter {
-	constructor(options) {
-		this.options = { ...options, ...defaults };
+	constructor() {
 		bind(this);
 		this.init();
 	}
@@ -28,7 +29,7 @@ export class Inputter {
 	}
 
 	init(){
-		this.keyboard = Keyboard.create();
+		this.keyboard = new Keyboard();
 		this.keyboard.attach();
 	}
 }

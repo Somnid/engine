@@ -10,7 +10,6 @@ export class Updater{
 	constructor(options) {
 		this.options = { ...defaults, ...options };
 		bind(this);
-		return updater;
 	}
 
 	update(state) {

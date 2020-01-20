@@ -131,7 +131,6 @@ const keyMap = {
 };
 
 function bind(keyboard) {
-	keyboard.init = keyboard.init.bind(keyboard);
 	keyboard.attach = keyboard.attach.bind(keyboard);
 	keyboard.detach = keyboard.detach.bind(keyboard);
 	keyboard.handleKeyPress = keyboard.handleKeyPress.bind(keyboard);

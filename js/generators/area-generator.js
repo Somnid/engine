@@ -4,10 +4,16 @@ function bind(areaGenerator) {
 
 export class AreaGenerator {
 	constructor() {
-		bind(areaGenerator);
+		bind(this);
 	}
 
 	generateArea() {
 		//return a data structure for a map or something
+		return [
+			[1, 1, 1, 1],
+			[1, 0, 0, 1],
+			[1, 0, 0, 1],
+			[1, 1, 1, 1],
+		];
 	}
 }
