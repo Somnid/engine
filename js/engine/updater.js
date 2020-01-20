@@ -1,32 +1,25 @@
-const Updater = (function() {
+const defaults = {
+	inputter: null
+};
 
-	const defaults = {
-		inputter: null
-	};
+function bind(updater) {
+	updater.update = updater.update.bind(updater);
+}
 
-	function create(options) {
-		let updater = {};
-		updater.options = Object.assign({}, defaults, options);
-		bind(updater);
+export class Updater{
+	constructor(options) {
+		this.options = { ...defaults, ...options };
+		bind(this);
 		return updater;
 	}
 
-	function bind(updater) {
-		updater.update = update.bind(updater);
-	}
-
-	function update(state) {
+	update(state) {
 		const now = performance.now();
 		const timeSinceLastFrame = now - this.lastFrameTime;
 		this.lastFrameTime = now;
-		const newState = state; //For bootstrapping, this should porbably be an immutable copy
+		const newState = state; //For bootstrapping, this should probably be an immutable copy
 		const inputState = this.options.inputter.getInputState();
 		//game tick logic
 		return newState;
 	}
-
-	return {
-		create
-	};
-
-})();
+}

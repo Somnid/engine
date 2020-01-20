@@ -1,31 +1,20 @@
-const Loader = (function() {
+const defaults = {
+	areaGenerator: null
+};
 
-	const defaults = {
-		areaGenerator: null
-	};
+function bind(loader) {
+	loader.initialLoad = loader.initialLoad.bind(loader);
+}
 
-	function create(options) {
-		const loader = {};
-		loader.options = Object.assign({}, defaults, options);
-		bind(loader);
-
-		return loader;
+export class {
+	constructor(options) {
+		this.options = { ...defaults, ...options };
+		bind(this);
 	}
 
-	function bind(loader) {
-		loader.initialLoad = initialLoad.bind(loader);
+	async initialLoad() {
+		return {
+			map: this.options.areaGenerator.generateArea()
+		}
 	}
-
-	function initialLoad() {
-		return new Promise((resolve, reject) => {
-			resolve({
-				map: this.options.areaGenerator.generateArea()
-			});
-		});
-	}
-
-	return {
-		create
-	};
-
-})();
+}

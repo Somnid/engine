@@ -1,21 +1,13 @@
-const AreaGenerator = (function() {
+function bind(areaGenerator) {
+	areaGenerator.generateArea = areaGenerator.generateArea.bind(areaGenerator);
+}
 
-	function create() {
-		let areaGenerator = {};
+export class AreaGenerator {
+	constructor() {
 		bind(areaGenerator);
-		return areaGenerator;
 	}
 
-	function bind(areaGenerator) {
-		areaGenerator.generateArea = generateArea.bind(areaGenerator);
+	generateArea() {
+		//return a data structure for a map or something
 	}
-
-	function generateArea() {
-
-	}
-
-	return {
-		create
-	};
-
-})();
+}

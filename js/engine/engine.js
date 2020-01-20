@@ -1,46 +1,35 @@
-"use strict";
-const Engine = (function(){
+const defaults = {
+	onCreate: Promise.resolve({}),
+	onUpdate: function () { },
+	onRender: function () { }
+};
 
-	const defaults = {
-		onCreate : Utils.promiseStub,
-		onUpdate : function(){},
-		onRender : function(){}
-	};
+function bind(engine){
+	engine.init = engine.init.bind(engine);
+	engine.startEngine = engine.startEngine.bind(engine);
+	engine.tick = engine.tick.bind(engine);
+}
 
-	function create(options){
-		let engine = {};
-		engine.options = Object.assign({}, defaults, options);
-		bind(engine);
-
-		engine.init();
-
-		return engine;
+export class Engine {
+	constructor(options){
+		this.options = { ...defaults, ...options };
+		bind(this);
+		this.init();
 	}
 
-	function bind(engine){
-		engine.init = init.bind(engine);
-		engine.startEngine = startEngine.bind(engine);
-		engine.tick = tick.bind(engine);
-	}
-
-	function init(){
+	init(){
 		this.options.onCreate()
 			.then(this.startEngine);
 	}
 
-	function startEngine(initialState){
+	startEngine(initialState){
 		this.state = initialState;
 		requestAnimationFrame(this.tick);
 	}
 
-	function tick(){
+	tick(){
 		this.state = this.options.onUpdate(this.state);
 		this.options.onRender(this.state);
 		requestAnimationFrame(this.tick);
 	}
-
-	return {
-		create
-	};
-
-})();
+}

@@ -1,26 +1,16 @@
-var Random = (function(){
+export function getInt(exclusiveCap){
+	return Math.floor(Math.random() * exclusiveCap);
+}
 
-	function getInt(exclusiveCap){
-		return Math.floor(Math.random() * exclusiveCap);
+export function getBool(){
+	if(getInt(2) == 0){
+		return true;
+	}else{
+		return false;
 	}
+}
 
-	function getBool(){
-		if(getInt(2) == 0){
-			return true;
-		}else{
-			return false;
-		}
-	}
-
-	function getOption(optionList){
-		var index = getInt(optionList.length);
-		return optionList[index];
-	}
-
-	return {
-		getInt
-		getBool
-		getOption
-	};
-
-})();
+export function getOption(optionList){
+	var index = getInt(optionList.length);
+	return optionList[index];
+}

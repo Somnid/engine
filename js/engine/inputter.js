@@ -1,46 +1,34 @@
-const Inputter = (function() {
+function bind(inputter) {
+	inputter.init = inputter.init.bind(inputter);
+	inputter.getInputState = inputter.getInputState.bind(inputter);
+	inputter.getKeyboard = inputter.getKeyboard.bind(inputter);
+	inputter.getGamepad = inputter.getGamepad.bind(inputter);
+}
 
-	const defaults = {
-
-	};
-
-	function create(options) {
-		let inputter = {};
-		inputter.options = Object.assign({}, options, defaults);
-		bind(inputter);
-		inputter.init();
-		return inputter;
+export class Inputter {
+	constructor(options) {
+		this.options = { ...options, ...defaults };
+		bind(this);
+		this.init();
 	}
 
-	function bind(inputter) {
-		inputter.init = init.bind(inputter);
-		inputter.getInputState = getInputState.bind(inputter);
-		inputter.getKeyboard = getKeyboard.bind(inputter);
-		inputter.getGamepad = getGamepad.bind(inputter);
-	}
-
-	function getInputState() {
+	getInputState() {
 		return {
 			keyboard: this.getKeyboard(),
 			gamepad: this.getGamepad()
 		};
 	}
 
-	function getKeyboard() {
+	getKeyboard() {
 		return this.keyboard.currentState; //make immutable
 	}
 
-	function getGamepad() {
+	getGamepad() {
 
 	}
 
-	function init(){
+	init(){
 		this.keyboard = Keyboard.create();
 		this.keyboard.attach();
 	}
-
-	return {
-		create: create
-	};
-
-})();
+}
